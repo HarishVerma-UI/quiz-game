@@ -27,7 +27,7 @@ export class GameService {
     }
 
 
-    console.log(updatedData);
+    //console.log(updatedData);
   }
 
   getServiceData(): questionModel[] {
@@ -49,22 +49,22 @@ export class GameService {
   }
 
   ConvertStringToQuestionModelArray(text: string) {
-    let x = text.split(";");
+    let x = text.split(";").filter(m=>m!=="");
     let questionModelArray: questionModel[] = [];
     for (let i = 1; i <= x.length; i++) {
       questionModelArray.push({ id: i, question: x[i - 1] });
     }
-    console.log(questionModelArray);
+    //console.log(questionModelArray);
     return questionModelArray;
   }
 
   ConvertQuestionModelArrayToString(list: questionModel[]): string {
     let returnValue: string = " ";
     list.forEach(element => {
-      console.log(element.question);
+      //console.log(element.question);
       returnValue = returnValue.concat(element.question + ";");
     });
-    console.log(returnValue);
+    //console.log(returnValue);
     return returnValue;
   }
 

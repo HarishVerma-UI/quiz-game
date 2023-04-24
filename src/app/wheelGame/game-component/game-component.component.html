@@ -1,16 +1,27 @@
-<app-header></app-header>
+
+
 <div>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Question</th>
-            <th>Edit Question</th>
-            <th>Delete Question</th>
-        </tr>
-        <tr *ngFor="let ques of data">
-            <td>{{ques.id}}</td>
-            <td>{{ques.question}}</td>
-            
-        </tr>
-    </table>
+    <input type="button" (click)="spinWheel()" value=" Spin Wheel"/>
 </div>
+<div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
+    
+    <div
+      class="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-lg"
+    >
+      <ngx-wheel
+        #wheel
+        [width]="400"
+        [height]="400"
+        [spinDuration]="2"
+        [items]="items"
+        [innerRadius]="20"
+        [spinAmount]="10"
+        [textOrientation]="textOrientation"
+        [textAlignment]="textAlignment"
+        pointerStrokeColor="black"
+        pointerFillColor="gold"
+        [idToLandOn]="idToLandOn"
+        (onSpinStart)="before()"
+        (onSpinComplete)="after()"
+      ></ngx-wheel>
+    </div>
