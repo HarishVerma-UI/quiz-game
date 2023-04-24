@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { questionModel } from './questionModel';
+import { GameService } from '../service/game.service';
 
 @Component({
   selector: 'app-management-component',
@@ -21,6 +22,8 @@ public questionList: questionModel[] = [];
     }
 
     this.resetForm();
+
+    this.service.setData(this.questionList);
   }
 
   updateQuestionList(question: questionModel) {
@@ -64,7 +67,10 @@ public questionList: questionModel[] = [];
     }
   }
 
-  constructor() { }
+  constructor(private service:GameService = new GameService()) {
+    this.service.sharedNameArray$
+    .subscribe(sharedNameArray => this.questionList = sharedNameArray)
+   }
 
   ngOnInit(): void {
   }
