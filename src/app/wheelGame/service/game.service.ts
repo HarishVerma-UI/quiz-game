@@ -9,7 +9,12 @@ export class GameService {
   private dummy: questionModel[] = [];
   private sharedNameArray: Subject<questionModel[]> = new Subject();
   sharedNameArray$: Observable<questionModel[]> = this.sharedNameArray.asObservable();
-  key: string = "questions";
+  key: string = "name";
+
+  save(key:string, value:string){
+    this.removeData(this.key);
+    this.saveData(this.key, value);
+  }
 
   setData(updatedData: questionModel[]) {
     console.log("saving data");
@@ -28,6 +33,10 @@ export class GameService {
 
 
     //console.log(updatedData);
+  }
+
+  getNames(){
+    return this.getData(this.key);    
   }
 
   getServiceData(): questionModel[] {

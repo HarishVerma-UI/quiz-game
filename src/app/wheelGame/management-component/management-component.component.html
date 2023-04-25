@@ -5,14 +5,14 @@
         <table>
             <tr>
                 <th></th>
-                <th>ID</th>
-                <th>Question</th>
+                <!-- <th>ID</th> -->
+                <th>Name</th>
                 <th>Save</th>
             </tr>
             <tr>
                 <td><label>Enter Question : </label></td>
-                <td><input type="text" name="inputId" [(ngModel)]="inputId" disabled/></td>
-                <td><input type="text" name="inputQuestion" [(ngModel)]="inputQuestion"/></td>                
+                <!-- <td><input type="text" name="inputNameId" [(ngModel)]="inputNameId" disabled/></td> -->
+                <td><input type="text" name="inputName" [(ngModel)]="inputName"/></td>                
                 <td><input type="button" value="Save" (click)="saveQuestion()" style="background-color: chartreuse;"/></td>
             </tr>
         </table>
@@ -24,11 +24,11 @@
                 <th>Edit Question</th>
                 <th>Delete Question</th>
             </tr>
-            <tr *ngFor="let ques of questionList">
-                <td>{{ques.id}}</td>
-                <td>{{ques.question}}</td>
-                <td><input type="button" (click)="editQuestion(ques)" value="Edit Question" /></td>
-                <td><input type="button" (click)="deleteQuestion(ques)" value="Delete Question" /></td>
+            <tr *ngFor="let name of namesList.collection">
+                <td>{{name.id}}</td>
+                <td>{{name.value}}</td>
+                <td><input type="button" (click)="editName(name)" value="Edit Question" /></td>
+                <td><input type="button" (click)="deleteName(name)" value="Delete Question" /></td>
             </tr>
         </table>
     </div>
