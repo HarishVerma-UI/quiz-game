@@ -19,7 +19,7 @@ public questionList: questionModel[] = [];
   public inputName:string = "";
   public inputNameId:number = -1;
 
-  saveQuestion() {
+  saveName() {
     // this.namesList.push(this.inputQuestion);
     // console.log(this.namesList.names);
     let newQuestion = { id: this.inputNameId, value: this.inputName };

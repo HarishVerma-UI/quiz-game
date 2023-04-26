@@ -23,6 +23,9 @@ export class GameComponentComponent implements OnInit {
   textAlignment: TextAlignment = TextAlignment.OUTER;
   data: commonModel[] = [];
 
+  // Loads the tick audio sound in to an audio object.
+  audio = new Audio('http://192.168.1.37:8081/tick1.mp3');
+
   constructor(private service: GameService = new GameService()) { }
 
   ngOnInit(): void {
@@ -31,7 +34,11 @@ export class GameComponentComponent implements OnInit {
     //   .subscribe(sharedNameArray => this.data = sharedNameArray);
     this.getData();
     // initiation of wheel
-    this.idToLandOn = Math.floor(Math.random() * this.data.length);
+    this.prepareWheel();
+}
+
+prepareWheel(){
+  //this.idToLandOn = Math.floor(Math.random() * this.data.length);
     const colors = ['#FF0000', '#000000'];
     this.items = this.data.map((value) => ({
       fillStyle: colors[value.id % 2],
@@ -73,7 +80,6 @@ export class GameComponentComponent implements OnInit {
   }
   before() {
     console.log("before spinning wheel");
-    //alert('Your wheel is about to spin');
   }
 
   async spin(prize: any) {
@@ -81,10 +87,34 @@ export class GameComponentComponent implements OnInit {
     this.idToLandOn = prize;
     await new Promise((resolve) => setTimeout(resolve, 1));
     this.wheel.spin();
+    await this.playSound();  
   }
 
+  // This function is called when the sound is to be played.
+ async playSound()
+ {
+     // Stop and rewind the sound if it already happens to be playing.
+     this.audio.pause();
+     this.audio.currentTime = 0;
+     this.audio.loop = true;
+
+     const audioClipDuration = 600;
+     this.audio.loop = true;
+     let playCount = 6;
+     setTimeout(() => this.audio.loop = false, (audioClipDuration * (playCount - 1)));
+     this.audio.play();
+ }
+
   after() {
-    console.log("You won prize : " + this.idToLandOn);
-    //alert('You have been bamboozled');
+    this.data.splice(this.idToLandOn, 1);
+    this.reorderCollectionIndex();
+    this.prepareWheel();
+    console.log("after");
   }
+
+  private reorderCollectionIndex() {
+    for (let i = 0; i < this.data.length; i++) {
+        this.data[i].id = i + 1;
+    }
+}
 }

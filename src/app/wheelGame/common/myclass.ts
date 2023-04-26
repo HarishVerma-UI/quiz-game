@@ -19,10 +19,10 @@ export class commonGameUtilityCollectionClass {
     delete(value: commonModel) {
         var index = this.findIndex(value);
         this.collection.splice(index, 1);
-        this.reorderQuestionId();
+        this.reorderCollectionIndex();
     }
 
-    private reorderQuestionId() {
+    private reorderCollectionIndex() {
         for (let i = 0; i < this.collection.length; i++) {
             this.collection[i].id = i + 1;
         }
