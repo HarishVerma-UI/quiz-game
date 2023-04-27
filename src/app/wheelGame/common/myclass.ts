@@ -4,22 +4,40 @@ import { commonModel } from "./commonModel";
 export class commonGameUtilityCollectionClass {
     collection: commonModel[];
 
-    constructor() {
+    constructor(private service: GameService = new GameService()) {
         this.collection = [];
     }
 
-    push(value: string) {
+    push(key:string, value: string) {
         this.collection.push({ id: this.getNextId(), value: value });
+        this.updateService(key);
     }
 
-    update(value: commonModel) {
+    update(key:string, value: commonModel) {
         this.collection[this.findIndex(value)] = value;
+        this.updateService(key);
     }
 
-    delete(value: commonModel) {
+    delete(key:string, value: commonModel) {
         var index = this.findIndex(value);
         this.collection.splice(index, 1);
         this.reorderCollectionIndex();
+
+        this.updateService(key);
+    }
+
+    getCollection(){
+        return this.collection;
+    }
+
+    updateService(key:string) {
+        this.service.save(key, this.ConvertArrayToString(this.collection));
+    }
+
+    setCollection(key:string){
+        let d = this.service.getData(key);
+
+        if(d!==null) this.collection = this.ConvertStringToArray(d);
     }
 
     private reorderCollectionIndex() {
@@ -62,6 +80,4 @@ export class commonGameUtilityCollectionClass {
 
         return returnValue;
     }
-
-
 }

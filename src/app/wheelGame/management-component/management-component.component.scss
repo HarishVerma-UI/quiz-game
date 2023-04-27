@@ -2,3 +2,36 @@ input{
         border: 1px solid black;
         padding: 3px;
     }
+
+main{
+    position: relative;
+    top: 50px;
+}
+
+div{
+    margin-top: 10px;
+    margin-bottom: 37px;
+    border: 2px solid black;
+}
+
+.question{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: medium;
+    background: rgb(238,174,202);
+    background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+.name{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: medium;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 1%);
+}
+
+input, text{
+    border-radius: 5px;
+}
+button{
+    border-radius: 5px;
+    background-color: red;
+}

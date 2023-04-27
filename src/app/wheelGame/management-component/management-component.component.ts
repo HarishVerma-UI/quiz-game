@@ -4,6 +4,7 @@ import { GameService } from '../service/game.service';
 import { commonGameUtilityCollectionClass } from '../common/myclass';
 import { nameClass } from '../common/nameClass';
 import { commonModel } from '../common/commonModel';
+import { questionClass } from '../common/questionClass';
 
 @Component({
   selector: 'app-management-component',
@@ -11,97 +12,75 @@ import { commonModel } from '../common/commonModel';
   styleUrls: ['./management-component.component.scss']
 })
 export class ManagementComponentComponent implements OnInit {
-public questionList: questionModel[] = [];
-  public inputId: any = null;
-  public inputQuestion: string = "";
-  public namesList:nameClass;
+  // public questionList: questionModel[] = [];
+  
 
-  public inputName:string = "";
-  public inputNameId:number = -1;
+
+
+  //#region namesOperation
+  public inputName: string = "";
+  public inputNameId: number = -1;
+  public namesList: nameClass;
 
   saveName() {
-    // this.namesList.push(this.inputQuestion);
-    // console.log(this.namesList.names);
-    let newQuestion = { id: this.inputNameId, value: this.inputName };
-    if ( this.inputNameId === -1) {
-      this.namesList.push(this.inputName);
-      this.namesList.updateService();
-      console.log("if" + this.namesList.collection);
-      
-      // this.questionList.push({ id: this.inputId !== null ? this.inputId : this.getNextId(), question: this.inputQuestion });
+    if (this.inputNameId === -1) {
+      this.namesList.addNew(this.inputName);
     }
     else {
-      this.namesList.update({ id: this.inputNameId, value: this.inputName });
-      this.namesList.updateService();
-      console.log(this.namesList.collection);
-
-      // this.updateQuestionList(newQuestion);
+      this.namesList.edit({ id: this.inputNameId, value: this.inputName });
     }
 
     this.resetForm();
-
-    // this.service.setData(this.questionList);
-  }
-
-  updateQuestionList(question: questionModel) {
-    this.questionList[this.findIndex(question)] = question;
-  }
-
-  deleteName(name: commonModel) {
-    this.namesList.delete({id:name.id, value:name.value});
-    }
-
-  deleteQuestion(ques: questionModel) {
-    var index = this.findIndex(ques);
-    this.questionList.splice(index, 1);
-    this.reorderQuestionId();
   }
 
   editName(name:commonModel){
-    this.inputName = name.value;
     this.inputNameId = name.id;
+    this.inputName = name.value;
   }
 
-  editQuestion(ques: questionModel) {
-    this.inputQuestion = ques.question;
-    this.inputId = ques.id;
+  deleteName(name: commonModel) {
+    this.namesList.remove({ id: name.id, value: name.value });
+  }
+  //#endregion namesOperation
+
+  //#region QuestionOperations
+  public inputQuestion: string = "";
+  public inputQuestionId: number = -1;
+  public questionList: questionClass;
+  
+  saveQuestion() {
+    if (this.inputQuestionId === -1) {
+      this.questionList.addNew(this.inputQuestion);
+    }
+    else {
+      this.questionList.edit({ id: this.inputQuestionId, value: this.inputQuestion });
+    }
+
+    this.resetForm();
   }
 
-  private getNextId(): number {
-    if (this.questionList.length - 1 < 0) return 1;
-
-    return this.questionList[this.questionList.length - 1].id + 1;
+  editQuestion(question: commonModel){
+    this.inputQuestionId = question.id;
+    this.inputQuestion = question.value;
   }
 
-  private alreadyExist(obj: questionModel): boolean {
-    if (this.findIndex(obj) === -1) return false;
-    return true;
+  deleteQuestion(question: commonModel) {
+    this.questionList.remove({ id: question.id, value: question.value });
   }
-
-  private findIndex(obj: questionModel) {
-    return this.questionList.findIndex(q => q.id === obj.id || q.question === obj.question);
-  }
+  //#endregion
 
   private resetForm() {
     this.inputQuestion = "";
-    this.inputId = null;
+    this.inputQuestionId = -1;
 
     this.inputName = "";
     this.inputNameId = -1;
   }
 
-  private reorderQuestionId() {
-    for (let i = 0; i < this.questionList.length; i++) {
-      this.questionList[i].id = i + 1;
-    }
-  }
-
-  constructor(private service:GameService = new GameService()) {
-    this.service.sharedNameArray$
-    .subscribe(sharedNameArray => this.questionList = sharedNameArray);
-
+  constructor(private service: GameService = new GameService()) {
+    this.questionList = new questionClass();
     this.namesList = new nameClass();
-   }
+  }
 
   ngOnInit(): void {
   }

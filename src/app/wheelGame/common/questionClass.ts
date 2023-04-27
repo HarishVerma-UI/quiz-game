@@ -1,8 +1,8 @@
 import { commonModel } from "./commonModel";
 import { commonGameUtilityCollectionClass } from "./myclass";
 
-export class nameClass extends commonGameUtilityCollectionClass {
-    key: string = "name";
+export class questionClass extends commonGameUtilityCollectionClass {
+    key: string = "question";
 
     constructor() {
         super();

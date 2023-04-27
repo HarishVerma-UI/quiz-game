@@ -1,35 +1,72 @@
-<div class="relative pt-16 pb-32 flex content-center items-center justify-center" style="min-height: 75vh">
-    <!-- <p>items works!</p>
-    <p>{{inputQuestion}}</p> -->
-    <div>
-        <table>
-            <tr>
-                <th></th>
-                <!-- <th>ID</th> -->
-                <th>Name</th>
-                <th>Save</th>
-            </tr>
-            <tr>
-                <td><label>Enter Name : </label></td>
-                <!-- <td><input type="text" name="inputNameId" [(ngModel)]="inputNameId" disabled/></td> -->
-                <td><input type="text" name="inputName" [(ngModel)]="inputName"/></td>                
-                <td><input type="button" value="Save Name" (click)="saveName()" style="background-color: chartreuse;"/></td>
-            </tr>
-        </table>
+<main>
+    <div class="relative flex content-center items-center justify-center">
+        <div class="gap-2 columns-2">
+            <div class="question">
 
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Question</th>
-                <th>Edit Question</th>
-                <th>Delete Question</th>
-            </tr>
-            <tr *ngFor="let name of namesList.collection">
-                <td>{{name.id}}</td>
-                <td>{{name.value}}</td>
-                <td><input type="button" (click)="editName(name)" value="Edit Question" /></td>
-                <td><input type="button" (click)="deleteName(name)" value="Delete Question" /></td>
-            </tr>
-        </table>
+                <div>
+                    <table>
+                        <tr>
+                            <th>Question</th>
+                            <th>Save Question</th>
+                        </tr>
+                        <tr>
+                            <td><label>Enter Question : </label></td>
+                            <td><input type="text" name="inputName" [(ngModel)]="inputQuestion" /></td>
+                            <td><input type="button" value="Save Question" (click)="saveQuestion()"
+                                    style="background-color: chartreuse;" /></td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Question</th>
+                            <th>Edit Question</th>
+                            <th>Delete Question</th>
+                        </tr>
+                        <tr *ngFor="let question of questionList.collection">
+                            <td>{{question.id}}</td>
+                            <td>{{question.value}}</td>
+                            <td><input type="button" (click)="editQuestion(question)" value="Edit Question" /></td>
+                            <td><input type="button" (click)="deleteQuestion(question)" value="Delete Question" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="name">
+                <div>
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Save</th>
+                        </tr>
+                        <tr>
+                            <td><label>Enter Name : </label></td>
+                            <td><input type="text" name="inputName" [(ngModel)]="inputName" /></td>
+                            <td><input type="button" value="Save Name" (click)="saveName()"
+                                    style="background-color: chartreuse;" /></td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Edit Name</th>
+                            <th>Delete Name</th>
+                        </tr>
+                        <tr *ngFor="let name of namesList.collection">
+                            <td>{{name.id}}</td>
+                            <td>{{name.value}}</td>
+                            <td><input type="button" (click)="editName(name)" value="Edit Name" /></td>
+                            <td><input type="button" (click)="deleteName(name)" value="Delete Name" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-</div>
+</main>
