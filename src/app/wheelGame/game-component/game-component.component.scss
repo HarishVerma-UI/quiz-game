@@ -1,30 +1,31 @@
-input {
-    position: relative;
-    top: 100px;
-    border: 3px solid blue;
-    height: 50px;
-    width: 120px;
-    border-radius: 10px;
-}
+// input {
+//     position: relative;
+//     top: 100px;
+//     border: 3px solid blue;
+//     height: 50px;
+//     width: 120px;
+//     border-radius: 10px;
+// }
 
-.game {
-    position: relative;
-    height: 600px;
-    width: 600px;
-    top: 45px;
-    bottom: 500px;
-    margin: 20px 20px 20px 20px;
-}
+// .game {
+//     position: relative;
+//     height: 600px;
+//     width: 600px;
+//     top: 45px;
+//     bottom: 500px;
+//     margin: 20px 20px 20px 20px;
+// }
 
-.questionPopup {
-    position: inherit;
-    border: 4px solid black;
-    border-radius: 5px;
-    margin: 10px;
-}
+// .questionPopup {
+//     position: inherit;
+//     border: 4px solid black;
+//     border-radius: 5px;
+//     margin: 10px;
+// }
 
 .myContainer{
     position: relative;
+    display: flex;
     height: 1200px;
     width: auto;
     top: 45px;
@@ -32,3 +33,26 @@ input {
     margin: 20px 20px 20px 20px;
     border: 3px solid blue;
 }
+
+
+// // .question{
+// //     font-family: 'Courier New', Courier, monospace;
+// //     font-size: medium;
+// //     background: rgb(238,174,202);
+// //     background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+// // }
+
+// // .name{
+// //     font-family: 'Courier New', Courier, monospace;
+// //     font-size: medium;
+// //     background: rgb(2,0,36);
+// //     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 1%);
+// // }
+
+// // input, text{
+// //     border-radius: 5px;
+// // }
+// // button{
+// //     border-radius: 5px;
+// //     background-color: red;
+// // }

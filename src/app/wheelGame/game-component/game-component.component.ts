@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GameService } from '../service/game.service';
-import { questionModel } from '../management-component/questionModel';
 import { NgxWheelComponent, TextAlignment, TextOrientation } from 'ngx-wheel';
 import { commonModel } from '../common/commonModel';
 import { nameClass } from '../common/nameClass';
@@ -124,4 +122,77 @@ export class GameComponentComponent implements OnInit {
     if(this.questionData.collection.length-1===0) alert("Last Question Left. Enter more fun!!");
     if(this.questionData.collection.length===0) alert("No Question Left. Game Will Over!");
   }
+
+  displayNameSection(id:string){
+    var name = document.getElementById('#nameSection');
+    if (name!==null) name.style.display = 'none';
+    var ques = document.getElementById('#questionSection');
+    if (ques!==null) ques.style.display = 'none';
+
+    var element = document.getElementById(id);
+    console.log(element);
+    if (element!==null) element.style.display = 'block';
+  }
+
+  //#region QuestionOperations
+  public inputQuestion: string = "";
+  public inputQuestionId: number = -1;
+  public questionList: questionClass = new questionClass;
+  
+  saveQuestion() {
+    if (this.inputQuestionId === -1) {
+      this.questionList.addNew(this.inputQuestion);
+    }
+    else {
+      this.questionList.edit({ id: this.inputQuestionId, value: this.inputQuestion });
+    }
+
+    this.resetForm();
+  }
+
+  editQuestion(question: commonModel){
+    this.inputQuestionId = question.id;
+    this.inputQuestion = question.value;
+  }
+
+  deleteQuestion(question: commonModel) {
+    this.questionList.remove({ id: question.id, value: question.value });
+  }
+  //#endregion
+
+  //#region namesOperation
+  public inputName: string = "";
+  public inputNameId: number = -1;
+  public namesList: nameClass = new nameClass;
+
+  saveName() {
+    if (this.inputNameId === -1) {
+      this.namesList.addNew(this.inputName);
+    }
+    else {
+      this.namesList.edit({ id: this.inputNameId, value: this.inputName });
+    }
+
+    this.resetForm();
+  }
+
+  editName(name:commonModel){
+    this.inputNameId = name.id;
+    this.inputName = name.value;
+  }
+
+  deleteName(name: commonModel) {
+    this.namesList.remove({ id: name.id, value: name.value });
+  }
+  //#endregion namesOperation
+
+  
+  private resetForm() {
+    this.inputQuestion = "";
+    this.inputQuestionId = -1;
+
+    this.inputName = "";
+    this.inputNameId = -1;
+  }
+
 }
