@@ -4,23 +4,22 @@ This project is a simplified front end of wheelgame. It was created with Angular
 
 ### TODO's
 
-- [ ] Design a page wheel game  :- Shekhar 
+- [x] Design a page wheel game  :- Shekhar 
 - [ ] Skip button if user is not avalible 
-- [ ] Chnage a question if question is repeat or always give uniq question 
-- [ ] Music chnage option and and mute audio option avalible there   :-Ram 
-- [ ] Create a page for adding user and questions with good design   :-Abhishek 
+- [X] Chnage a question if question is repeat or always give uniq question 
+- [x] Music chnage option and and mute audio option avalible there   :-Ram 
+- [x] Create a page for adding user and questions with good design   :-Abhishek 
 - [ ] Create user account page
-- [ ] Write unit test cases for components 
 - [x] Create a landing page for game 
 - [x] Implement a ngx-wheel with start button it's start
 
 Before creating any UI chnage create mockup for file and get approvel form any team member then you will start work
 ### TODO's backend 
 
-- [ ] Implement node js backend 
-- [ ] Create end point api for add questions 
-- [ ] Create end point api for users (players)
-- [ ] Create a schema for mongo db and host mongo server 
+- [x] Implement node js backend 
+- [x] Create end point api for add questions 
+- [x] Create end point api for users (players)
+- [x] Create a schema for mongo db and host mongo server 
 
 # wheel-backend
 ### API Endpoints
