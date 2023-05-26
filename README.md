@@ -22,6 +22,22 @@ Before creating any UI chnage create mockup for file and get approvel form any t
 - [ ] Create end point api for users (players)
 - [ ] Create a schema for mongo db and host mongo server 
 
+# wheel-backend
+### API Endpoints
+
+- Wheel API: [https://wheel-api.onrender.com/](https://wheel-api.onrender.com/)
+- Questions API: [https://wheel-api.onrender.com/questions](https://wheel-api.onrender.com/questions)
+- Users API : [https://wheel-api.onrender.com/users](https://wheel-api.onrender.com/users)
+- Colors API : [https://wheel-api.onrender.com/colors](https://wheel-api.onrender.com/colors)
+
+## To access and modify resources, you can use any HTTP method:
+- GET 
+- POST 
+- PUT 
+- PATCH 
+- DELETE 
+- OPTIONS
+
 ### Tools used
 
 - Angular
