@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NgxWheelComponent, TextAlignment, TextOrientation } from 'ngx-wheel';
 import { Howl } from 'howler';
+import { GameServiceApi } from '../wheelGame/service/game-service-api.service';
+import { quizData } from '../wheelGame/service/quizData';
 
 @Component({
   selector: 'app-start-game',
@@ -12,59 +14,83 @@ export class StartGameComponent implements OnInit {
   @ViewChild('container') container!: ElementRef;
 
   names = [
-    'Ro Sieben',
-    'Nathan Samsoedien',
-    'Danny Hegeraad',
-    'Bert Kuipers',
-    'Kaushik Sakala',
-    'Bharatgouda Police Patil',
-    'Akshay Kumar',
-    'Eduard Nijensteen',
-    'Eric Edelenbos',
-    'Palvi Jojra',
-    'Eldin Hulsman',
-    'Lex Goudriaan',
-    'Kenneth Mensink',
-  ];
-  colors = [
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'blue',
-    'purple',
-    'pink',
-    'brown',
-    'maroon',
-    'navy',
-    'teal',
-    'olive',
-    'gold',
-    'silver',
-    'bronze',
-    'plum',
-    'peach',
-    'magenta',
-    'violet',
-    'indigo',
-    'turquoise',
-    'coral',
-    'lavender',
-    'sky blue',
-    'rose',
-    'beige',
-    'mustard',
-    'cream',
-    'khaki',
-    'wine',
-    'lavender',
-    'sky blue',
-    'rose',
-    'beige',
-    'mustard',
-    'cream',
-    'khaki',
-    'wine',
+    {
+      name: 'Ro Sieben',
+
+      color: 'red',
+    },
+
+    {
+      name: 'Nathan Samsoedien',
+
+      color: 'orange',
+    },
+
+    {
+      name: 'Danny Hegeraad',
+
+      color: 'silver',
+    },
+
+    {
+      name: 'Bert Kuipers',
+
+      color: '#f6b73c',
+    },
+
+    {
+      name: 'Kaushik Sakala',
+
+      color: 'red',
+    },
+
+    {
+      name: 'Bharatgouda Police Patil',
+
+      color: '#f6b73c',
+    },
+
+    {
+      name: 'Akshay Kumar',
+
+      color: 'indigo',
+    },
+
+    {
+      name: 'Eduard Nijensteen',
+
+      color: 'olive',
+    },
+
+    {
+      name: 'Eric Edelenbos',
+
+      color: 'violet',
+    },
+
+    {
+      name: 'Palvi Jojra',
+
+      color: 'gold',
+    },
+
+    {
+      name: 'Eldin Hulsman',
+
+      color: 'navy',
+    },
+
+    {
+      name: 'Lex Goudriaan',
+
+      color: 'pink',
+    },
+
+    {
+      name: 'Kenneth Mensink',
+
+      color: 'turquoise',
+    },
   ];
 
   idToLandOn: any;
@@ -80,21 +106,39 @@ export class StartGameComponent implements OnInit {
   textAlignment: TextAlignment = TextAlignment.INNER;
   randomQuestion!: string;
   selectedName = 'Player';
-  selectedNames: string[] = [];
+  selectedNames: any[] = [];
   isCollapsibleOpen = false;
-  newName!: string;
+  newName: { name: string; color: string } = {
+    name: '',
+    color: '',
+  };
+  editedColor!: any;
+  questionList: quizData[] = [];
+  catagoryQuestionList: quizData[] = [];
+  topic: string = '';
+  topics: string[] = [];
+  selectedCategory!: string;
+  catagory: boolean = false;
 
-  constructor() {}
+  constructor(private service: GameServiceApi) {}
 
   ngOnInit(): void {
+    this.getQuestion();
     this.assignNames();
   }
 
+  getQuestion() {
+    this.service.getData().subscribe((data) => {
+      this.questionList = data;
+      this.topics = [...new Set(this.questionList.map((item) => item.topic))];
+    });
+  }
+
   assignNames() {
-    this.idToLandOn = Math.floor(Math.random() * this.names.length);
+    this.idToLandOn = Math.floor(Math.random());
     this.items = this.names.map((value, index) => ({
-      fillStyle: this.colors[index % this.colors.length],
-      text: value,
+      fillStyle: value.color,
+      text: value.name,
       id: index,
       textFillStyle: 'black',
       textFontSize: '22',
@@ -106,68 +150,44 @@ export class StartGameComponent implements OnInit {
   }
 
   spin() {
+    this.randomQuestion = '';
     this.removeName(this.idToLandOn);
     this.reset();
-    this.idToLandOn = Math.floor(Math.random() * this.names.length);
+    this.idToLandOn = Math.floor(Math.random());
     this.wheel.spin();
-    this.randomQuestion = '';
   }
 
   removeName(idToLandOn: any) {
     const removedName = this.names.splice(idToLandOn, 1)[0];
-    this.items = this.names.map((value, index) => ({
-      fillStyle: this.colors[index % this.colors.length],
-      text: value,
-      id: index,
-      textFillStyle: 'black',
-      textFontSize: '22',
-    }));
+    this.assignNames();
     this.selectedNames.push(removedName);
-    this.selectedName = removedName;
+    this.selectedName = removedName.name;
   }
 
   toggleCollapsible() {
     this.isCollapsibleOpen = !this.isCollapsibleOpen;
   }
 
-  getRandomQuestion() {
-    const questions = [
-      'How would you like to work often? - Bed, Chair-table, Couch',
-      'How many cups of coffee, tea, or beverage-of-choice do you have each morning?',
-      'What`s your favorite way to spend a day off?',
-      'What`s one thing you can`t say at work that you wish you could?',
-      'How would you spend your days if you had unlimited time and resources?',
-      'What was your dream profession growing up?',
-      'Sell any one of the following: ',
-      'What`s the craziest thing you have ever done?',
-      'If you were forced to sing karaoke, what song would you choose and why?',
-      'You`re going to sail around the world. What`s the name of your boat?',
-      'If I handed you a plane ticket right now to anywhere in the world, where would you go?',
-      'If you could choose your age forever, what age would you choose and why?',
-      'If you had 25 hours each day, how would you use your extra hour?',
-      'If you could be the world`s best athlete in any sport, which one would it be any why?',
-      'If you could go back in time and pay more attention in one class, what would it be?',
-      'Are you team Android or team Apple and Why?',
-      'Would you rather be in a zombie apocalypse or a robot apocalypse?',
-      'If you could instantly learn a new talent, what would it be?',
-      'Why do people say “slept like a baby” when babies wake up all the time in the middle of the night?',
-      'Does the person flying in the middle seat get both armrests?',
-      'Match the following images to their names food names and images',
-      'What are u better at Writing a buggy code Or Crashing a prod env',
-      'sell any one of the following',
-      'What will you steel from the following and why? unwashed spoon, used jean, half eaten banana, used toothbrush',
-    ];
+  getCatagoryQuestion(topicName: string) {
+    this.catagoryQuestionList = this.questionList.filter(
+      (x) => x.topic == topicName
+    );
+  }
 
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    this.randomQuestion = questions[randomIndex];
+  getRandomQuestion() {
+    const questionList = this.catagory ? this.catagoryQuestionList : this.questionList;
+    const randomIndex = Math.floor(Math.random() * questionList.length);
+    this.randomQuestion = questionList[randomIndex].question;
   }
   before() {
     this.sound.play();
   }
+
   after() {
     this.sound.unload();
     this.getRandomQuestion();
   }
+
   editName(id: any) {
     this.newName = this.names[id];
     this.names.splice(id, 1)[0];
@@ -175,15 +195,31 @@ export class StartGameComponent implements OnInit {
   }
 
   deleteName(id: any) {
-    this.names.splice(id++, 1)[0];
-    this.assignNames();
-    this.reset();
-    this.idToLandOn = Math.floor(Math.random() * this.names.length);
+    this.names.splice(id, 1)[0];
+    this.setWheel();
   }
-  addName(name: any) {
-    this.names.push(name);
+
+  addName(name: any, color: any) {
+    this.names.push({ name, color });
+    this.setWheel();
+  }
+
+  onChangeCategory(event: Event) {
+    this.catagory = true;
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.getCatagoryQuestion(selectedValue);
+  }
+
+  setWheel() {
     this.reset();
     this.assignNames();
-    this.idToLandOn = Math.floor(Math.random() * this.names.length);
+    this.idToLandOn = Math.floor(Math.random());
+    setTimeout(() => {
+      this.setWheel(), 1000;
+    });
+  }
+
+  editColor() {
+    this.setWheel();
   }
 }

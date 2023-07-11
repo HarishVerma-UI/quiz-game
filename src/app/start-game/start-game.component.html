@@ -3,9 +3,7 @@
 >
   <i class="fa-sharp fa-light fa-gear-complex"></i>
 </button>
-<section class="relative py-20">
-  <div class="a circle1"></div>
-  <div class="a circle2"></div>
+<section class="relative">
   <div class="flex">
     <div class="absolute">
       <!-- Collapsible Button -->
@@ -19,7 +17,7 @@
       <!-- Collapsible Content -->
       <div
         *ngIf="isCollapsibleOpen"
-        class="overflow-hidden transition-height duration-300 py-2 px-4 rounded mx-4 my-2"
+        class=" bg-gray-300 overflow-hidden transition-height duration-300 py-2 px-4 rounded mx-4 my-2"
         [ngClass]="{
           'h-0 w-0': !isCollapsibleOpen,
           'h-auto w-auto': isCollapsibleOpen
@@ -33,19 +31,25 @@
                   #nameInput
                   id="nameInput"
                   type="text"
-                  [(ngModel)]="newName"
+                  [(ngModel)]="newName.name"
                   class="border border-gray-400 rounded py-2 px-1 mt-4"
                   placeholder="Add Name Here"
                 />
                 <button class="relative">
                   <input
+                    #colorInput
+                    id="colorInput"
                     type="color"
+                    [(ngModel)]="newName.color"
                     class="rounded-full h-10 w-10 py-2 px-1 mt-4"
                   />
                 </button>
                 <button
                   class="bg-gray-600 hover:bg-gray-800 text-white font-bold rounded pl-2 py-2 px-1 mt-4"
-                  (click)="addName(nameInput.value); nameInput.value = ''"
+                  (click)="
+                    addName(nameInput.value, colorInput.value);
+                    nameInput.value = ''
+                  "
                 >
                   <i class="fa-solid fa-user-plus"></i>
                 </button>
@@ -55,18 +59,25 @@
               <h2 class="text-xl font-semibold mx-4"></h2>
               <ul class="px-2">
                 <li
-                  *ngFor="let name of names; let i = index"
+                  *ngFor="let item of names; let i = index"
                   class="flex items-end justify-between"
                 >
                   <span
                     class="border border-black-300 ml-1 rounded py-0 px-1"
-                    >{{ name }}</span
+                    >{{ item.name }}</span
                   >
                   <div class="flex">
                     <button
                       class="hover:bg-blue-500 text-white-500 ml-1 border rounded py-0 px-1"
                     >
-                      <input type="color" class="rounded-full h-5 w-5" />
+                      <input
+                        #edit
+                        id="edit"
+                        type="color"
+                        [(ngModel)]="item.color"
+                        class="rounded-full h-5 w-5"
+                        (change)="editColor()"
+                      />
                     </button>
                     <button
                       class="hover:bg-blue-500 text-white-500 ml-1 border rounded py-0 px-1"
@@ -92,17 +103,16 @@
   <div class="container mx-auto px-0">
     <div class="items-center flex flex-wrap">
       <div class="w-40 items-center md:w-4/12 ml-auto pr-2 flex flex-col">
-        <div class="md:pt-4">
+        <div *ngIf="!isCollapsibleOpen" class="md:pt-4">
           <div>
             <div *ngIf="randomQuestion">
               <h2 class="text-5xl font-bold mx-4">Hey {{ selectedName }},</h2>
               <p
                 class="text-stone-950 italics text-3xl font-bold ml-3 mt-6 mb-8"
               >
-                {{ randomQuestion }}
+                {{randomQuestion}}
               </p>
             </div>
-
             <button
               class="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mx-4 ml-4"
               (click)="getRandomQuestion()"
@@ -117,6 +127,17 @@
               <i class="fa-solid fa-rotate"></i>
               Spin
             </button>
+            <div class="py-2 ml-2 mr-2">
+              <select class="w-auto border-2 ml-2 shadow-gray-500 hover:bg-slate-200" (change)="onChangeCategory($event)" >
+                <option [ngValue]="null">Random</option>
+                <option
+                  *ngFor="let topicName of topics"
+                  [ngValue]="topicName"
+                >
+                  {{ topicName }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
